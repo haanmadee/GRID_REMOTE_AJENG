@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Minimalist Grid</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+        :root {
+            --primary-color: #18375d; /* Warna request user */
+            --gray-text: #888;
+            --border-color: #f1f1f1;
+        }
+
+        body {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            padding: 15px; /* Padding body sedikit dikurangi */
+            min-height: 100vh;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* --- GRID SYSTEM --- */
+        .product-grid {
+            display: grid;
+            /* Mobile: 2 Kolom Presisi */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; /* Jarak antar kotak lebih rapat (compact) */
+            width: 100%;
+        }
+
+        /* Desktop: 4 Kolom */
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* --- PRODUCT CARD --- */
+        .product-card {
+            background: white;
+            /* Border sangat tipis, tanpa shadow tebal agar minimalist */
+            border: 1px solid var(--border-color);
+            border-radius: 8px; /* Radius lebih kecil agar terlihat modern/tajam */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* --- IMAGE AREA (ASPEK RASIO 1:1) --- */
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Membuat kotak persegi sempurna */
+            background: #fff;
+        }
+
+        .card-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; /* Gambar tidak full mentok pinggir agar rapi */
+            height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- CONTENT AREA --- */
+        .card-content {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+            text-align: left; /* Rata kiri lebih minimalist */
+        }
+
+        .product-name {
+            font-size: 0.85rem; /* Ukuran font pas untuk mobile */
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            height: 2.8em; /* Tinggi fix untuk 2 baris text */
+            
+            /* Limit text 2 baris */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-container {
+            margin-bottom: 12px;
+        }
+
+        .original-price {
+            font-size: 0.7rem;
+            color: #bbb;
+            text-decoration: line-through;
+            display: block;
+        }
+
+        .discount-price {
+            font-size: 0.95rem;
+            color: var(--primary-color); /* Warna biru navy */
+            font-weight: 700;
+        }
+
+        /* --- BUTTON MINIMALIST (OUTLINE STYLE) --- */
+        .btn-minimal {
+            display: block;
+            width: 100%;
+            padding: 8px 0;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            
+            /* Style Outline */
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-minimal:hover, .btn-minimal:active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* --- COMING SOON CARD --- */
+        .product-card.coming-soon {
+            background-color: #f9f9f9;
+            border: 1px dashed #ddd;
+            justify-content: center;
+            align-items: center;
+            color: #aaa;
+        }
+
+        .coming-soon-inner {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .coming-soon-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086877478_9459034.png" alt="Product" class="card-image">
+                </div>
+                <div class="card-content">
+                    <div class="product-info">
+                        <div class="product-name">45 Minutes Private Mentoring Session</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 350.000</span>
+                            <span class="discount-price">Rp 159.000</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/9d22v10q0zd0" class="btn-minimal" target="_blank">Detail</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086923260_1886717.png" alt="Product" class="card-image">
+                </div>
+                <div class="card-content">
+                    <div class="product-info">
+                        <div class="product-name">3x Gmeet Private Mentoring Session</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 750.000</span>
+                            <span class="discount-price">Rp 499.900</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/y9jjk36e558m" class="btn-minimal" target="_blank">Detail</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086958862_3477087.png" alt="Product" class="card-image">
+                </div>
+                <div class="card-content">
+                    <div class="product-info">
+                        <div class="product-name">Review Portofolio + Template Proposal</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 129.000</span>
+                            <span class="discount-price">Rp 34.900</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/9x7799jjj1gn" class="btn-minimal" target="_blank">Detail</a>
+                </div>
+            </div>
+
+            <div class="product-card coming-soon">
+                <div class="coming-soon-inner">
+                    <div style="font-size: 24px; margin-bottom: 5px;">🔒</div>
+                    <div class="coming-soon-text">Coming<br>Soon</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
