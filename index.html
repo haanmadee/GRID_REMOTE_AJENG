@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Minimalist Grid</title>
+    <title>Frameless Minimalist Grid</title>
     <style>
-        /* --- RESET & BASIC SETUP --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        /* --- RESET & SETUP --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 
         :root {
-            --primary-color: #18375d; /* Warna request user */
-            --gray-text: #888;
-            --border-color: #f1f1f1;
+            --primary-color: #18375d; /* Biru Navy */
+            --bg-card-content: #ffffff;
+            --shadow-soft: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         body {
             background-color: transparent;
             display: flex;
             justify-content: center;
-            padding: 15px; /* Padding body sedikit dikurangi */
+            /* Padding dikurangi agar kotak produk lebih lebar mentok ke samping */
+            padding: 10px; 
             min-height: 100vh;
         }
 
@@ -27,16 +28,15 @@
             max-width: 900px;
         }
 
-        /* --- GRID SYSTEM --- */
+        /* --- GRID CONFIG --- */
         .product-grid {
             display: grid;
-            /* Mobile: 2 Kolom Presisi */
             grid-template-columns: repeat(2, 1fr); 
-            gap: 10px; /* Jarak antar kotak lebih rapat (compact) */
+            /* Gap diperkecil jadi 8px agar kotak produk lebih lebar lagi */
+            gap: 8px; 
             width: 100%;
         }
 
-        /* Desktop: 4 Kolom */
         @media (min-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(4, 1fr);
@@ -44,24 +44,32 @@
             }
         }
 
-        /* --- PRODUCT CARD --- */
-        .product-card {
-            background: white;
-            /* Border sangat tipis, tanpa shadow tebal agar minimalist */
-            border: 1px solid var(--border-color);
-            border-radius: 8px; /* Radius lebih kecil agar terlihat modern/tajam */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
+        /* --- ANIMASI GETER (VIBRATE) --- */
+        @keyframes geter {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
 
-        /* --- IMAGE AREA (ASPEK RASIO 1:1) --- */
+        /* --- PRODUCT CARD STRUCTURE --- */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            /* HAPUS background & border di container utama (Frameless) */
+            background: transparent;
+            border: none;
+        }
+
+        /* --- BAGIAN GAMBAR (TRANSPARAN) --- */
         .card-image-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* Membuat kotak persegi sempurna */
-            background: #fff;
+            padding-top: 100%; /* Tetap rasio 1:1 */
+            margin-bottom: -15px; /* Sedikit overlap ke bawah agar menyatu */
+            z-index: 2; /* Gambar di atas kotak putih */
         }
 
         .card-image {
@@ -69,31 +77,44 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%; /* Gambar tidak full mentok pinggir agar rapi */
-            height: 90%;
+            width: 100%; 
+            height: 100%;
             object-fit: contain;
+            /* Efek drop shadow pada gambar produknya langsung (opsional, biar pop-up) */
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
             transition: transform 0.3s ease;
         }
 
-        /* --- CONTENT AREA --- */
+        /* Efek zoom dikit pas hover gambar */
+        .product-card:hover .card-image {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        /* --- BAGIAN KONTEN (KOTAK PUTIH) --- */
         .card-content {
-            padding: 10px;
+            background: var(--bg-card-content);
+            padding: 20px 10px 12px 10px; /* Padding atas lebih besar krn ketutup gambar dikit */
+            border-radius: 12px;
+            
+            /* Shadow halus & Border tipis hanya di bagian teks */
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #f0f0f0;
+            
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
             justify-content: space-between;
-            text-align: left; /* Rata kiri lebih minimalist */
+            flex-grow: 1;
+            z-index: 1;
+            text-align: left;
         }
 
         .product-name {
-            font-size: 0.85rem; /* Ukuran font pas untuk mobile */
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: #333;
-            margin-bottom: 6px;
-            line-height: 1.4;
-            height: 2.8em; /* Tinggi fix untuk 2 baris text */
-            
-            /* Limit text 2 baris */
+            margin-bottom: 8px;
+            line-height: 1.35;
+            height: 2.7em; /* Tinggi fix 2 baris */
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -108,16 +129,16 @@
             font-size: 0.7rem;
             color: #bbb;
             text-decoration: line-through;
-            display: block;
         }
 
         .discount-price {
             font-size: 0.95rem;
-            color: var(--primary-color); /* Warna biru navy */
+            color: var(--primary-color);
             font-weight: 700;
+            display: block;
         }
 
-        /* --- BUTTON MINIMALIST (OUTLINE STYLE) --- */
+        /* --- TOMBOL (OUTLINE + GETER) --- */
         .btn-minimal {
             display: block;
             width: 100%;
@@ -126,40 +147,52 @@
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s ease;
             
-            /* Style Outline */
+            /* Style Outline Biru Navy */
             background-color: transparent;
             color: var(--primary-color);
             border: 1px solid var(--primary-color);
         }
 
+        /* Hover Effect: Warna Penuh + Animasi Geter */
         .btn-minimal:hover, .btn-minimal:active {
             background-color: var(--primary-color);
             color: white;
+            animation: geter 0.4s ease-in-out; /* Panggil animasi geter */
         }
 
-        /* --- COMING SOON CARD --- */
-        .product-card.coming-soon {
-            background-color: #f9f9f9;
-            border: 1px dashed #ddd;
+        /* --- COMING SOON --- */
+        .product-card.coming-soon .card-image-wrapper {
+            opacity: 0.5; /* Gambar/Icon transparan */
+        }
+        
+        .product-card.coming-soon .card-content {
             justify-content: center;
             align-items: center;
-            color: #aaa;
+            background: #fafafa; /* Sedikit abu utk pembeda */
+            min-height: 140px;
         }
 
-        .coming-soon-inner {
-            text-align: center;
-            padding: 20px;
+        .icon-lock {
+            font-size: 3rem;
+            margin-bottom: 0;
+            color: #ccc;
+            /* Posisi ikon gembok sebagai pengganti gambar */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .coming-soon-text {
-            font-size: 0.75rem;
-            font-weight: 600;
+            color: #999;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 5px;
+            text-align: center;
         }
 
     </style>
@@ -171,10 +204,10 @@
             
             <div class="product-card">
                 <div class="card-image-wrapper">
-                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086877478_9459034.png" alt="Product" class="card-image">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086877478_9459034.png" alt="Produk 1" class="card-image">
                 </div>
                 <div class="card-content">
-                    <div class="product-info">
+                    <div>
                         <div class="product-name">45 Minutes Private Mentoring Session</div>
                         <div class="price-container">
                             <span class="original-price">Rp 350.000</span>
@@ -187,10 +220,10 @@
 
             <div class="product-card">
                 <div class="card-image-wrapper">
-                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086923260_1886717.png" alt="Product" class="card-image">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086923260_1886717.png" alt="Produk 2" class="card-image">
                 </div>
                 <div class="card-content">
-                    <div class="product-info">
+                    <div>
                         <div class="product-name">3x Gmeet Private Mentoring Session</div>
                         <div class="price-container">
                             <span class="original-price">Rp 750.000</span>
@@ -203,10 +236,10 @@
 
             <div class="product-card">
                 <div class="card-image-wrapper">
-                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086958862_3477087.png" alt="Product" class="card-image">
+                    <img src="https://cdn.lynkid.my.id/draft-products/07-12-2025/1765086958862_3477087.png" alt="Produk 3" class="card-image">
                 </div>
                 <div class="card-content">
-                    <div class="product-info">
+                    <div>
                         <div class="product-name">Review Portofolio + Template Proposal</div>
                         <div class="price-container">
                             <span class="original-price">Rp 129.000</span>
@@ -218,8 +251,10 @@
             </div>
 
             <div class="product-card coming-soon">
-                <div class="coming-soon-inner">
-                    <div style="font-size: 24px; margin-bottom: 5px;">🔒</div>
+                <div class="card-image-wrapper">
+                    <div class="icon-lock">🔒</div>
+                </div>
+                <div class="card-content">
                     <div class="coming-soon-text">Coming<br>Soon</div>
                 </div>
             </div>
