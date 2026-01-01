@@ -19,7 +19,6 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            /* Padding dikurangi agar kotak produk lebih lebar mentok ke samping */
             padding: 10px; 
             height: auto;
         }
@@ -33,7 +32,6 @@
         .product-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); 
-            /* Gap diperkecil jadi 8px agar kotak produk lebih lebar lagi */
             gap: 8px; 
             width: 100%;
         }
@@ -59,7 +57,6 @@
         .product-card {
             display: flex;
             flex-direction: column;
-            /* HAPUS background & border di container utama (Frameless) */
             background: transparent;
             border: none;
         }
@@ -69,8 +66,8 @@
             position: relative;
             width: 100%;
             padding-top: 100%; /* Tetap rasio 1:1 */
-            margin-bottom: -15px; /* Sedikit overlap ke bawah agar menyatu */
-            z-index: 2; /* Gambar di atas kotak putih */
+            margin-bottom: -15px; 
+            z-index: 2; 
         }
 
         .card-image {
@@ -81,12 +78,10 @@
             width: 100%; 
             height: 100%;
             object-fit: contain;
-            /* Efek drop shadow pada gambar produknya langsung (opsional, biar pop-up) */
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
             transition: transform 0.3s ease;
         }
 
-        /* Efek zoom dikit pas hover gambar */
         .product-card:hover .card-image {
             transform: translate(-50%, -50%) scale(1.05);
         }
@@ -94,13 +89,10 @@
         /* --- BAGIAN KONTEN (KOTAK PUTIH) --- */
         .card-content {
             background: var(--bg-card-content);
-            padding: 20px 10px 12px 10px; /* Padding atas lebih besar krn ketutup gambar dikit */
+            padding: 20px 10px 12px 10px; 
             border-radius: 12px;
-            
-            /* Shadow halus & Border tipis hanya di bagian teks */
             box-shadow: var(--shadow-soft);
             border: 1px solid #f0f0f0;
-            
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -115,7 +107,7 @@
             color: #333;
             margin-bottom: 8px;
             line-height: 1.35;
-            height: 2.7em; /* Tinggi fix 2 baris */
+            height: 2.7em; 
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -150,50 +142,15 @@
             font-weight: 600;
             border-radius: 8px;
             transition: all 0.2s ease;
-            
-            /* Style Outline Biru Navy */
             background-color: transparent;
             color: var(--primary-color);
             border: 1px solid var(--primary-color);
         }
 
-        /* Hover Effect: Warna Penuh + Animasi Geter */
         .btn-minimal:hover, .btn-minimal:active {
             background-color: var(--primary-color);
             color: white;
-            animation: geter 0.4s ease-in-out; /* Panggil animasi geter */
-        }
-
-        /* --- COMING SOON --- */
-        .product-card.coming-soon .card-image-wrapper {
-            opacity: 0.5; /* Gambar/Icon transparan */
-        }
-        
-        .product-card.coming-soon .card-content {
-            justify-content: center;
-            align-items: center;
-            background: #fafafa; /* Sedikit abu utk pembeda */
-            min-height: 140px;
-        }
-
-        .icon-lock {
-            font-size: 3rem;
-            margin-bottom: 0;
-            color: #ccc;
-            /* Posisi ikon gembok sebagai pengganti gambar */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .coming-soon-text {
-            color: #999;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
+            animation: geter 0.4s ease-in-out; 
         }
 
     </style>
@@ -251,12 +208,51 @@
                 </div>
             </div>
 
-            <div class="product-card coming-soon">
+            <div class="product-card">
                 <div class="card-image-wrapper">
-                    <div class="icon-lock">🔒</div>
+                    <img src="https://cdn.lynkid.my.id/draft-products/01-01-2026/1767276227658_8098032.png" alt="Produk 4" class="card-image">
                 </div>
                 <div class="card-content">
-                    <div class="coming-soon-text">Coming<br>Soon</div>
+                    <div>
+                        <div class="product-name">E-Course Data Entry</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 79.000</span>
+                            <span class="discount-price">Rp 35.000</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/ovqn82kv6vd7" class="btn-minimal" target="_blank">Detail</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://cdn.lynkid.my.id/draft-products/01-01-2026/1767276351454_9966247.png" alt="Produk 5" class="card-image">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <div class="product-name">E-Course Support Admin VA</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 79.000</span>
+                            <span class="discount-price">Rp 35.000</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/jdv4o6r23111" class="btn-minimal" target="_blank">Detail</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-image-wrapper">
+                    <img src="https://cdn.lynkid.my.id/draft-products/01-01-2026/1767276447266_1082891.png" alt="Produk 6" class="card-image">
+                </div>
+                <div class="card-content">
+                    <div>
+                        <div class="product-name">Nama Produk Baru 6</div>
+                        <div class="price-container">
+                            <span class="original-price">Rp 79.000</span>
+                            <span class="discount-price">Rp 35.000</span>
+                        </div>
+                    </div>
+                    <a href="https://lynk.id/ajengwahys/lnkm8y8dp036" class="btn-minimal" target="_blank">Detail</a>
                 </div>
             </div>
 
@@ -265,5 +261,3 @@
 
 </body>
 </html>
-
-
